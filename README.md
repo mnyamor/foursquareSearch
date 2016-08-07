@@ -5,15 +5,6 @@ This project uses Ionic library and AngularJS.
 ## Running the project
 
 ```bash
-$ npm install -g ionic
-```
-Then run: 
-
-```bash
-$ ionic serve
-```
-
-```bash
 $ sudo npm install -g ionic cordova
 $ git clone https://github.com/mnyamor/foursquareSearch.git  
 ```
