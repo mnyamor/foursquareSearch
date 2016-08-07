@@ -1,0 +1,16 @@
+<ion-view>
+  <ion-content>
+  <input type="search" ng-model="obj.searchStr" ng-change="search()" placeholder="Search Foursquare" class="search-input searchBar" />
+  <ion-list>
+    <ion-item class="item item-thumbnail-left item-icon-right" 
+      ng-click="handleClick(venue.venueID, $event)"
+      ng-repeat="venue in venues" 
+      type="item-text-wrap" 
+      href="#/search/search/{{venue.id}}">
+
+        <img ng-src="{{venue.picture_url}}">
+        <h2 class="name">{{venue.title}}</h2>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

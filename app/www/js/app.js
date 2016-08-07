@@ -1,9 +1,11 @@
-// Ionic Starter App
+// Ionic foursquareSearch App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('foursquareSearch', ['ionic'])
+angular.module('foursquareSearch', ['ionic',
+               'foursquareSearch.SearchController',
+               'foursquareSearch.SearchFactory'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -22,3 +24,36 @@ angular.module('foursquareSearch', ['ionic'])
     }
   });
 })
+
+.config(function($stateProvider, $urlRouterProvider) {
+
+  // Ionic uses AngularUI Router which uses the concept of states
+  // see more here: https://github.com/angular-ui/ui-router
+  // Set up the various states which the app can be in.
+  // Each state's controller can be found in controllers.js
+
+  $stateProvider
+
+  // setup an abstract state for the tabs directive
+    .state('search', {
+    url: '/',
+    templateUrl: 'templates/search.html',
+    controller: 'SearchCtrl'
+  })
+
+  // Each tab has its own nav history stack:
+
+  .state('search.search-detail', {
+      url: '/search/:searchId',
+      views: {
+        'search-detail': {
+         templateUrl: 'templates/search-detail.html',
+         controller: 'SearchDetailCtrl'
+        }
+      }
+  });
+
+  // if none of the above states are matched, use this as the fallback
+  $urlRouterProvider.otherwise('/');
+
+});
