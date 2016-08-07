@@ -1,15 +1,14 @@
 angular.module('foursquareSearch.SearchController', [])
 
-.controller('SearchCtrl', function ($scope, $http) {
+.controller('SearchCtrl', function ($scope, $http, $ionicLoading, $timeout) {
 
   $scope.obj = {
-    searchStr: 'Coffee',
+    searchStr: '',
     state: 'isLoading',
   };
   
   $scope.search = function() {
     $scope.obj.state = 'isLoading';
-
     // load filter options from localStorage 
     var searchTerm = JSON.parse(localStorage.getItem('searchTerm'));
     
@@ -48,42 +47,43 @@ angular.module('foursquareSearch.SearchController', [])
       &client_secret - secret generated from foursquare developers
       &v - version of api we are using - in my case, i use the current date
     */
+     $scope.doRefresh = function() {
+      $timeout(function() {
+       if ($scope.obj.searchStr !== '') {
+        $http.get("https://api.foursquare.com/v2/venues/explore/?near=" + $scope.obj.searchStr + "&venuePhotos=1&section=" + category.join(',') + "&client_id=" + config.clientID + "&client_secret=" + config.clientSecret + "&v=20160807")
+          .then(function(res, status) {
+            var items = [];
+            if (res !== null )
+             items = res.data.response.groups[0].items;
+            var arr = [];
+            for (var i in items) {
+              var place = $scope.getVenueData(items[i]);
+              arr.push(place);
+            }
+            $scope.obj.state = 'loaded';
+            $scope.venues = arr;
+          }, function(data, status) {
+            $scope.obj.state = 'noResult';
+          }, function errorCallback(response) {
+            console.log(response);
+            $scope.obj.state = 'isLoading';
 
-    $http.get("https://api.foursquare.com/v2/venues/explore/?near=" + $scope.obj.searchStr + "&venuePhotos=1&section=" + category.join(',') + "&client_id=" + config.clientID + "&client_secret=" + config.clientSecret + "&v=20160807")
-      .then(function(res, status) {
-        console.log(res.data.response.groups[0].items);
+              // called asynchronously if an error occurs
+              // or server returns response with an error status.
+            });
+      };
+      $ionicLoading.hide(); //hide the loading
+        $scope.$broadcast('scroll.refreshComplete');
+      }, 5000);
+     };
+    $ionicLoading.show();
+    $scope.doRefresh();
+  }
 
-        var items = res.data.response.groups[0].items;
-        var arr = [];
-
-        for (var i in items) {
-          var place = $scope.getVenue(items[i]);
-          arr.push(place);
-        }
-
-        $scope.obj.state = 'loaded';
-        $scope.venues = arr;
-      }, function(data, status) {
-        $scope.obj.state = 'noResult';
-      });
-  };
-
-
-  $scope.getVenue = function(data) {
+  $scope.getVenueData = function(data) {
    
     var venue = data.venue;
-    var price = '$';
     var rating = data.venue.rating;
-
-    if (venue.price) {
-      var value = venue.price.tier;
-      while (value > 1) {
-        price += '$';
-        value--;
-      }
-    } else {
-      price = '';
-    }
 
     $scope.getColor = function(){
       if (rating > 7) {
@@ -92,15 +92,24 @@ angular.module('foursquareSearch.SearchController', [])
         return 'venueScore negative';
       } 
     };
+
     if (data.tips) {
       var tips = data.tips[0].text;
     }
+   var photos = '';
    
+   if (data) {
+      if (venue.photos.groups[0])
+        if (venue.photos.groups[0].items[0])
+      photos = venue.photos.groups[0].items[0].prefix + '100x100' + venue.photos.groups[0].items[0].suffix;
+   } else {
+    console.log('no data');
+   }
    return {
       title: venue.name,
       rating: venue.rating,
       venueID: venue.id,
-      picture_url: venue.photos.groups[0].items[0].prefix + '100x100' + venue.photos.groups[0].items[0].suffix,
+      picture_url: photos,
       reviews: venue.ratingSignals + ' reviews',
       price: price,
       tips: tips,

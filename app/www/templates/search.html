@@ -7,9 +7,9 @@
       </label>
     </div>
   <ion-content>
-
    <ion-list>
-    <ion-item class="item item-thumbnail-left item-icon-right" 
+    <div ng-show="obj.state == 'noResult'" class="noResults">No results found</div>
+    <ion-item ng-show="obj.state == 'loaded'" class="item item-thumbnail-left item-icon-right" 
       ng-click="handleClick(venue.venueID, $event)"
       ng-repeat="venue in venues" 
       type="item-text-wrap" 
