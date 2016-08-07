@@ -47,7 +47,9 @@ angular.module('foursquareSearch.SearchController', [])
       &client_secret - secret generated from foursquare developers
       &v - version of api we are using - in my case, i use the current date
     */
-     $scope.doRefresh = function() {
+   
+     
+    $scope.doRefresh = function() {
       $timeout(function() {
        if ($scope.obj.searchStr !== '') {
         $http.get("https://api.foursquare.com/v2/venues/explore/?near=" + $scope.obj.searchStr + "&venuePhotos=1&section=" + category.join(',') + "&client_id=" + config.clientID + "&client_secret=" + config.clientSecret + "&v=20160807")
@@ -64,13 +66,9 @@ angular.module('foursquareSearch.SearchController', [])
             $scope.venues = arr;
           }, function(data, status) {
             $scope.obj.state = 'noResult';
-          }, function errorCallback(response) {
-            console.log(response);
-            $scope.obj.state = 'isLoading';
+            console.log('no result');
 
-              // called asynchronously if an error occurs
-              // or server returns response with an error status.
-            });
+          });
       };
       $ionicLoading.hide(); //hide the loading
         $scope.$broadcast('scroll.refreshComplete');
@@ -111,7 +109,6 @@ angular.module('foursquareSearch.SearchController', [])
       venueID: venue.id,
       picture_url: photos,
       reviews: venue.ratingSignals + ' reviews',
-      price: price,
       tips: tips,
       place: venue.location.formattedAddress[0] + ',' + venue.location.formattedAddress[1],
       category: venue.categories[0].name
