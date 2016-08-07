@@ -86,12 +86,12 @@ angular.module('foursquareSearch.SearchController', [])
         if ($scope.obj.searchStr !== '' && $scope.obj.location === '') {
           $scope.obj.location = config.location;
           return;
-        } else { $scope.obj.location = ''; } // if api fails
+        } //else { $scope.obj.location = ''; } // if api fails
 
         if ($scope.obj.searchStr === '' && $scope.obj.location !== '') {
             $scope.obj.searchStr ='Recommended places';
             return;
-        } else { $scope.obj.searchStr = ''; } // if api fails
+        } //else { $scope.obj.searchStr = ''; } // if api fails
         if ($scope.obj.searchStr !== '') {
           $http.get("https://api.foursquare.com/v2/venues/explore/?near=" + $scope.obj.location + "&query=" + $scope.obj.searchStr + "&v=20160807&m=foursquare&venuePhotos=1&section=" + category.join(',') + "&client_id=" + config.clientID + "&client_secret=" + config.clientSecret )
             .then(function (res, status) {
