@@ -1,1 +1,15 @@
-/* Empty. Add your own CSS if you like */
+.bar.bar-stable .title {
+    color: #fff;
+}
+.bar.bar-stable{
+  background: #2d5be3;
+  border-color: #2d5be3;
+}
+.searchBox {
+  background: #2d5be3;
+  position:fixed;
+  top:44px;
+}
+.has-header{
+  top:88px!important;
+}

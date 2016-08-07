@@ -1,7 +1,14 @@
-<ion-view>
+
+<ion-view title="Square Search">
+  <div class="bar bar-header item-input-inset searchBox">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" ng-model="obj.searchStr" ng-change="search()" placeholder="Search Foursquare" class="search-input searchBar" >
+      </label>
+    </div>
   <ion-content>
-  <input type="search" ng-model="obj.searchStr" ng-change="search()" placeholder="Search Foursquare" class="search-input searchBar" />
-  <ion-list>
+
+   <ion-list>
     <ion-item class="item item-thumbnail-left item-icon-right" 
       ng-click="handleClick(venue.venueID, $event)"
       ng-repeat="venue in venues" 

@@ -51,17 +51,18 @@ angular.module('foursquareSearch.SearchController', [])
 
     $http.get("https://api.foursquare.com/v2/venues/explore/?near=" + $scope.obj.searchStr + "&venuePhotos=1&section=" + category.join(',') + "&client_id=" + config.clientID + "&client_secret=" + config.clientSecret + "&v=20160807")
       .then(function(res, status) {
-        console.log(res.data.response);
-        var items = res.data.response.groups[0].items;
+        console.log(res.data.response.groups[0].items);
 
-        var help = [];
-        for (var el in items) {
-          var place = $scope.getVenue(items[el]);
-          help.push(place);
+        var items = res.data.response.groups[0].items;
+        var arr = [];
+
+        for (var i in items) {
+          var place = $scope.getVenue(items[i]);
+          arr.push(place);
         }
 
         $scope.obj.state = 'loaded';
-        $scope.venues = help;
+        $scope.venues = arr;
       }, function(data, status) {
         $scope.obj.state = 'noResult';
       });
