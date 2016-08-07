@@ -70,8 +70,10 @@ angular.module('foursquareSearch.SearchController', [])
 
 
   $scope.getVenue = function(data) {
+   
     var venue = data.venue;
     var price = '$';
+    var rating = data.venue.rating;
 
     if (venue.price) {
       var value = venue.price.tier;
@@ -83,27 +85,25 @@ angular.module('foursquareSearch.SearchController', [])
       price = '';
     }
 
-    var rating = Math.round(venue.rating) / 2.0;
-    var plus = [];
-    var minus = [];
-
-    for (var i in [0, 1, 2, 3, 4]) {
-      if (rating > 0.5) {
-        rating--;
-        plus.push(i);
+    $scope.getColor = function(){
+      if (rating > 7) {
+        return 'venueScore positive';
       } else {
-        minus.push(i);
-      }
+        return 'venueScore negative';
+      } 
+    };
+    if (data.tips) {
+      var tips = data.tips[0].text;
     }
-
-    return {
+   
+   return {
       title: venue.name,
-      plus: plus,
-      minus: minus,
+      rating: venue.rating,
       venueID: venue.id,
       picture_url: venue.photos.groups[0].items[0].prefix + '100x100' + venue.photos.groups[0].items[0].suffix,
       reviews: venue.ratingSignals + ' reviews',
       price: price,
+      tips: tips,
       place: venue.location.formattedAddress[0] + ',' + venue.location.formattedAddress[1],
       category: venue.categories[0].name
     };
