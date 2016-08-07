@@ -1,5 +1,6 @@
 angular.module('foursquareSearch.SearchFactory', [])
-
+  
+  //TO MOVE FETCH HERE.. 
 .factory('SearchFactory', function() {
   var config = {
       clientID: 'OGGXK4QQU0V3C3JWHSNL2QA4NH1VLMG5YLLJ1YFVAUHIUXM2',
