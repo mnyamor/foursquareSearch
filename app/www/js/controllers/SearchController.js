@@ -56,15 +56,13 @@ angular.module('foursquareSearch.SearchController', [])
                       return $scope.config.state = 'noResult';  
                   }
                 }, function(response) {
-                  if (response.status === 404 ) {
-                   $scope.config.state = 'notFound';
-                  }
-                  return;
+                      
+                    $ionicLoading.hide(); //hide the loading
+                    $scope.$broadcast('scroll.refreshComplete');
+                    return $scope.config.state = 'notFound';    
               });
           };
           $scope.getVenue();
-          
-           
         });
         
       }, 7000);
