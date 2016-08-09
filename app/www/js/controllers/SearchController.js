@@ -48,6 +48,8 @@ angular.module('foursquareSearch.SearchController', [])
                 $scope.venues = venueData.arr;
                 
                 $scope.config.state = 'loaded';  
+                 $ionicLoading.hide(); //hide the loading
+                 $scope.$broadcast('scroll.refreshComplete');
 
                  if ($scope.config.location === '' &&  $scope.config.searchStr === '' || 
                     ($scope.config.location === '' ||  $scope.config.searchStr === '') || $scope.config.location.length <= 3 ) {
@@ -61,10 +63,11 @@ angular.module('foursquareSearch.SearchController', [])
               });
           };
           $scope.getVenue();
+          
+           
         });
-        $ionicLoading.hide(); //hide the loading
-        $scope.$broadcast('scroll.refreshComplete');
-      }, 5000);
+        
+      }, 7000);
   };
   
   $scope.search = function () {
@@ -73,7 +76,7 @@ angular.module('foursquareSearch.SearchController', [])
       $ionicLoading.show();
       $scope.doRefresh();  
   };
-  $scope.$watch('config.searchStr', function () {
-     $scope.search();
-  });
+  // $scope.$watch('config.searchStr', function () {
+  //    $scope.search();
+  // });
 });
