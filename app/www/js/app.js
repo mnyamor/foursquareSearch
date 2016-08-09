@@ -3,12 +3,19 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
+
 angular.module('foursquareSearch', ['ionic',
+               'geolocation',
                'foursquareSearch.SearchController',
+               'foursquareSearch.GeoLocationFactory',
+               'foursquareSearch.SearchDetailCtrl',
+               'foursquareSearch.errorHttpInterceptor',
                'foursquareSearch.SearchFactory'])
 
 .run(function($ionicPlatform) {
+
   $ionicPlatform.ready(function() {
+
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -25,12 +32,14 @@ angular.module('foursquareSearch', ['ionic',
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+ .config(['$stateProvider', '$urlRouterProvider','$httpProvider', 
+         function($stateProvider, $urlRouterProvider, $httpProvider) {
+    
+    $httpProvider.interceptors.push('errorHttpInterceptor');
 
   // Ionic uses AngularUI Router which uses the concept of states
-  // see more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
+  // Each state's controller can be found in controllers
 
   $stateProvider
 
@@ -51,9 +60,19 @@ angular.module('foursquareSearch', ['ionic',
          controller: 'SearchDetailCtrl'
         }
       }
-  });
+  })
+
+  .state('search.404', {
+      url: '/search/:searchId',
+      views: {
+        'search-detail': {
+         templateUrl: 'templates/404.html',
+         controller: '404Ctrl'
+        }
+      }
+  })
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/');
 
-});
+}]);

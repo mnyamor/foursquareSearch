@@ -1,27 +1,37 @@
 <ion-view title="Square Search">
-   <div class="searchContainer">
-      <div class="bar bar-header item-input-inset searchBox">
-         <label class="item-input-wrapper">
-         <i class="icon ion-ios-search placeholder-icon"></i>
-         <input type="search" ng-model="obj.searchStr" ng-change="search()" placeholder="Search Foursquare" class="search-input searchBar" >
-         </label>
+   <ion-header-bar>
+      <div class="searchContainer bar bar-header">
+         <div class="bar item-input-inset searchBox">
+            <label class="item-input-wrapper">
+            <i class="icon ion-ios-search placeholder-icon"></i>
+            <input type="search" ng-model="config.searchStr" placeholder="Search Foursquare" class="search-input searchBar" >
+            </label>
+         </div>
+         <div class="bar item-input-inset locationBox">
+            <label class="item-input-wrapper">
+            <i class="icon ion-compass placeholder-icon"></i>
+            <input type="search" ng-model="config.location" placeholder="Near me" class="search-input searchBar" >
+            </label>
+         </div>
+         <div class="bar item-input-inset buttonContainer">
+            <button class="submitButton" type="submit" ng-click="search()" prevent-default>Search</button>
+         </div>
       </div>
-      <div class="bar bar-header item-input-inset locationBox">
-         <label class="item-input-wrapper">
-         <i class="icon ion-compass placeholder-icon"></i>
-         <input type="search" ng-model="obj.location" ng-change="search()" placeholder="Near me" class="search-input searchBar" >
-         </label>
-      </div>
-   </div>
+   </ion-header-bar>
    <ion-content>
       <ion-list>
-         <div ng-show="obj.state == 'noResult'" class="noResults">No results found</div>
-         <div ng-show="obj.state == 'loaded'">
-            <div class="suggestionText" id="messageBar"><span>Suggestions for <span class="searchTerm">{{obj.searchStr}}</span> near <span class="location">{{obj.location}}</span></span></div>
+         <div ng-show="config.state == 'noSearchTerm'" class="noResults">
+            Oops! Looks like there were no results. 
+         </div>
+         <div ng-show="config.state == 'noResult'" class="noResults">No results found</div>
+         <div ng-show="config.state == 'loaded'">
+            <div class="suggestionText" id="messageBar" ng-if="config.searchStr !== '' && config.location !== ''">
+               <span>Suggestions for <span class="searchTerm">{{config.searchStr}}</span> near <span class="location">{{config.location}}</span></span>
+            </div>
             <div class="list card"  ng-repeat="venue in venues">
                <div class="item item-avatar">
                   <img ng-src="{{venue.picture_url}}">
-                  <div class="search-title">{{venue.title}}</div>
+                  <div class="search-title">{{venue.name}}</div>
                   <div class="search-category">{{venue.category}}</div>
                   <div class="opening-hours">{{venue.openingHours}}</div>
                </div>
@@ -33,10 +43,9 @@
                      <span class="reviews">{{venue.reviews}}</span>
                   </div>
                   <div class="venue-address">{{venue.address}} </div>
-                  <p>{{venue.tips}}
-                     <span class="author">&ndash; {{venue.author}}</span>
-                  </p>
                   <p>
+                     {{venue.tips}}
+                     <!-- <span class="author">&ndash; {{venue.author}}</span> -->
                   </p>
                </div>
             </div>

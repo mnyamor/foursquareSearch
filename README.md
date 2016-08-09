@@ -1,6 +1,6 @@
-# foursquareSearch
-Web application that integrates with the Foursquare API and allows you to search for a place by name and return the recommended or popular venues near that location.
-This project uses Ionic library and AngularJS.
+# Foursquare Search
+Web application that integrates with the Foursquare API and allows you to search for a place by name and return the recommended or popular venues near the searched location.
+This project uses Ionic library and AngularJS. 
 
 ## Running the project
 
@@ -21,8 +21,16 @@ In case of browser
 
 ```bash
 $ ionic platform add browser
-$ ionic build browser
 $ ionic run browser
 ```
 
-Substitute ios for android if not on a Mac, but if you can, the ios development toolchain is a lot easier to work with.
+## Running gulp tasks
+
+  ```bash
+$ gulp
+```
+
+Running ionic serve inside app will run the app in browser -- uses livereload.
+
+
+

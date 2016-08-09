@@ -1,4 +1,4 @@
-angular.module('foursquareSearch.SearchController', [])
+angular.module('foursquareSearch.SearchDetailCtrl', [])
 
 .controller('SearchDetailCtrl', function($scope, $http) {
   $scope.mapClick = function() {
@@ -50,5 +50,4 @@ angular.module('foursquareSearch.SearchController', [])
 
     return info;
   };
-
 });

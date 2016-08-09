@@ -1,32 +1,45 @@
 .backdrop,
 .loading-container {
-    top: 132px;
+    top: 180px;
 }
 .bar.bar-stable .title {
     color: #fff;
 }
+.searchContainer.bar.bar-header { 
+    height:180px;
+    background: #2b56d8;
+}
+.platform-ios.platform-cordova:not(.fullscreen) .has-header,
+.platform-ios.platform-cordova:not(.fullscreen) .bar-subheader,
+.platform-ios.platform-cordova .backdrop,
+.platform-ios.platform-cordova .loading-container {
+    top: 216px !important;
+}
+.buttonContainer, 
+.bar.bar-stable,
+.searchBox, 
+.locationBox {    
+    background: #2b56d8;
+ }
 .bar.bar-stable {
-    background: #2d5be3;
-    border-color: #2d5be3;
+    border-color: #2b56d8;
 }
 .searchBox {
-    background: #2d5be3;
     position: fixed;
     top: 44px;
 }
 .has-header {
-    top: 132px!important;
+    top: 180px!important;
 }
 .search-title {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: #2d5be3;
+    color: #2b56d8;
     font-weight: bold;
 }
 .locationBox {
     position: fixed;
-    background: #2d5be3;
     top: 88px;
 }
 .search-category {
@@ -59,9 +72,7 @@
     top: -1px;
     width: 25px;
 }
-.venueScore.positive {
-    background: #00b551;
-}
+
 .venueScore {
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
@@ -102,4 +113,19 @@ span.location {
     margin: 0;
     font-size: 12px;
     color: #959b9e;
+}
+.buttonContainer {    
+    position:fixed;
+    top:132px;
+
+  }
+
+.submitButton {
+    background: #00b551;
+    color:#fff;
+    border: none;
+    width: 100%;
+    border-radius: 4px;
+    padding-right: 8px;
+    padding-left: 8px;
 }
